@@ -1,0 +1,10 @@
+*.swp
+a.out
+*.
+*.tgz
+minilibx/
+mlx/
+.DS_Store
+fdf
+fdf_ex
+*.dylib
