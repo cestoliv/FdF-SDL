@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.f>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 09:40:39 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/09 12:25:18 by ocartier         ###   ########lyon.fr   */
+/*   Updated: 2021/12/13 13:59:13 by ocartier         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	img_pixel_put(t_img *img, int x, int y, int color)
 	char	*pixel;
 	int		cur;
 
+	if (x >= 500 || x < 0 || y >= 500 || y < 0)
+		return ;
 	cur = img->pbits - 8;
 	pixel = img->buffer + (y * img->lbytes + x * (img->pbits / 8));
 	while (cur >= 0)

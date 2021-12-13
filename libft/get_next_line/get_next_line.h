@@ -1,49 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocartier <ocartier@student.42lyon.f>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 10:02:48 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/13 12:54:15 by ocartier         ###   ########lyon.fr   */
+/*   Created: 2021/12/13 10:56:30 by ocartier          #+#    #+#             */
+/*   Updated: 2021/12/13 10:58:34 by ocartier         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
-# include <math.h>
-# include <stdlib.h>
-# include <fcntl.h>
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 # include <unistd.h>
-typedef struct	s_img
-{
-	void	*img;
-	int		pbits;
-	int		lbytes;
-	int		endian;
-	char	*buffer;
-}	t_img;
+# define GNL_CLEAR 1
+# define GNL_KEEP 0
 
-typedef struct	s_program
+typedef struct s_prev_list
 {
-	void	*mlx;
-	void	*win;
-	t_img	img;
-}	t_program;
+	char				*prev;
+	int					fd;
+	struct s_prev_list	*next;
+}	t_prev_list;
 
-typedef struct	s_point
-{
-	int	x;
-	int	y;
-	int	last;
-}	t_point;
-
-typedef struct	s_3Dpoint
-{
-	int	x;
-	int	y;
-	int	z;
-	int	last;
-}	t_3Dpoint;
+long	charchr(const char *s, char c);
+size_t	ft_strlen(const char *s);
+char	*ft_strjoin(char *s1, char const *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	shiftstr(char **str, size_t start);
 #endif
