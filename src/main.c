@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minilibx/mlx.h"
+#include "../mlx/mlx.h"
 #include "includes/img.h"
 #include "includes/fdf.h"
 #include "includes/map.h"
+#include <stdio.h>
 
 int	deal_key(int key, void *param)
 {

@@ -67,8 +67,8 @@ void	alloc_3dmap_array(t_3Dpoint ***map, int height, int width)
 		curw = 0;
 		while (curw < width)
 		{
-			(*map)[curh][curw].x = curh;
-			(*map)[curh][curw].y = curw;
+			(*map)[curh][curw].x = curw;
+			(*map)[curh][curw].y = curh;
 			(*map)[curh][curw++].last = 0;
 		}
 		(*map)[curh][curw].last = 1;

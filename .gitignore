@@ -8,3 +8,4 @@ mlx/
 fdf
 fdf_ex
 *.dylib
+*.o

@@ -80,12 +80,33 @@ t_point	**convert_to_iso(t_3Dpoint **map)
 			//isomap[curh][curw].y *= 10;
 			isomap[curh][curw].y += 300;
 */
-
+/*
 			int w = (10 * sqrt(3)) / 2;
 			isomap[curh][curw].x = -w * (e.z - e.x);
 			isomap[curh][curw].y = -10 * (e.x / 2 + e.y + e.z / 2);
 			isomap[curh][curw].x += 300;
 			isomap[curh][curw].y += 300;
+*/
+
+			int x = e.x * 10;
+			int y = e.y * 10;
+			int z = e.z;
+
+			isomap[curh][curw].x = (x - y) * cos(0.8);
+			isomap[curh][curw].y = (x + y) * sin(0.8) - z;
+
+			//isomap[curh][curw].x = x * 20 / (z / 10 + 1);
+			//isomap[curh][curw].y = y * 20 / (z / 10 + 1);
+
+			//isomap[curh][curw].x *= 10;
+			//isomap[curh][curw].y *= 10;
+
+			isomap[curh][curw].x += 300;
+			isomap[curh][curw].y += 300;
+
+			//isomap[curh][curw].x = isomap[curh][curw].x * cos(0.8) - isomap[curh][curw].y * sin(0.8);
+			//isomap[curh][curw].y = isomap[curh][curw].y * cos(0.8) + isomap[curh][curw].x * sin(0.8);
+
 			curw++;
 		}
 		curh++;
