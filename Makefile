@@ -4,7 +4,9 @@ SRCS		= src/main.c \
 			  src/utils/convert.c
 HEADERS		= src/includes/fdf.h \
 			  src/includes/img.h \
-			  src/includes/map.h
+			  src/includes/map.h \
+			  src/includes/keys_linux.h \
+			  src/includes/keys_mac.h
 OBJS		= ${SRCS:.c=.o}
 NAME		= fdf
 CC			= clang -g

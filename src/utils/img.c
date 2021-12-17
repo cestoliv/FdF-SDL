@@ -6,12 +6,13 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 09:40:39 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/14 14:36:10 by ocartier         ###   ########.fr       */
+/*   Updated: 2021/12/17 15:25:02 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "../includes/img.h"
+#include "../../libft/libft.h"
 
 void	img_pixel_put(t_img *img, int x, int y, int color)
 {
@@ -48,6 +49,11 @@ void	img_init_background(t_img *img, int width, int height, int color)
 		}
 		x++;
 	}
+}
+
+void	clear_image(t_program *p)
+{
+	ft_bzero(p->img.buffer, p->width * p->height * (p->img.pbits / 8));
 }
 
 void	img_line_put(t_img *img, t_point p1, t_point p2, int color)
