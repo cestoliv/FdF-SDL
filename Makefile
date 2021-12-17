@@ -7,8 +7,10 @@ HEADERS		= src/includes/fdf.h \
 			  src/includes/map.h
 OBJS		= ${SRCS:.c=.o}
 NAME		= fdf
-CC			= gcc -g
-FLAGS		= -lm -Lmlx -lmlx -Llibft -lft -framework OpenGL -framework AppKit
+CC			= clang -g
+FLAGS		= -lm -Lmlx -lmlx -Llibft -lft
+FLAGS_MACOS	= -framework OpenGL -framework AppKit
+FLAGS_LINUX	= -lXext -lX11
 
 %.o: %.c ${HEADERS}
 			${CC} -Isrc/includes -c $< -o ${<:.c=.o}
@@ -17,10 +19,20 @@ all:		${NAME}
 
 ${NAME}:	${OBJS} ${HEADERS}
 			make -C libft
-			${CC} ${FLAGS} -o $@ ${OBJS}
+			make -C mlx
+			${CC} ${FLAGS} ${FLAGS_MACOS} -o $@ ${OBJS}
+
+linux:		${OBJS} ${HEADERS}
+			make -C libft
+			make -C mlx
+			${CC} ${OBJS} ${FLAGS} ${FLAGS_LINUX} -o ${NAME}
 
 clean:
+			make clean -C libft
+			make clean -C mlx
 			rm -rf ${OBJS}
 
 fclean:		clean
+			make fclean -C libft
+			make fclean -C mlx
 			rm -rf ${NAME}

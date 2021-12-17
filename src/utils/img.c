@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   img.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.f>       +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 09:40:39 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/13 13:59:13 by ocartier         ###   ########lyon.fr   */
+/*   Updated: 2021/12/14 14:36:10 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	img_pixel_put(t_img *img, int x, int y, int color)
 	char	*pixel;
 	int		cur;
 
-	if (x >= 500 || x < 0 || y >= 500 || y < 0)
+	if (x >= 1000 || x < 0 || y >= 1000 || y < 0)
 		return ;
 	cur = img->pbits - 8;
 	pixel = img->buffer + (y * img->lbytes + x * (img->pbits / 8));
@@ -90,7 +90,7 @@ void	img_line_put(t_img *img, t_point p1, t_point p2, int color)
 		}
 	}
 */
-/*	
+/*
 	double dx;
 	double dy;
 	int	e;
@@ -104,7 +104,7 @@ void	img_line_put(t_img *img, t_point p1, t_point p2, int color)
 	{
 		img_pixel_put(img, pixelX, pixelY, color);
 		pixelX++;
-		
+
 		if (e < 0)
 			e = e + dx;
 		else
@@ -112,14 +112,14 @@ void	img_line_put(t_img *img, t_point p1, t_point p2, int color)
 			e = e + dy;
 			pixelY++;
 		}
-		
-		
+
+
 		if ((e = e - dy) <= 0)
 		{
 			pixelY++;
 			e = e + dx;
 		}
-		
+
 	}
 */
 	/*

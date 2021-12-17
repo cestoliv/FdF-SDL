@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.f>       +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:02:48 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/13 12:54:15 by ocartier         ###   ########lyon.fr   */
+/*   Updated: 2021/12/15 10:59:34 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,37 @@ typedef struct	s_img
 	char	*buffer;
 }	t_img;
 
-typedef struct	s_program
-{
-	void	*mlx;
-	void	*win;
-	t_img	img;
-}	t_program;
-
 typedef struct	s_point
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 	int	last;
 }	t_point;
 
 typedef struct	s_3Dpoint
 {
-	int	x;
-	int	y;
-	int	z;
-	int	last;
+	double	x;
+	double	y;
+	double	z;
+	int		last;
 }	t_3Dpoint;
+
+typedef struct	s_map
+{
+	t_point	**m2d;
+	t_3Dpoint	**m3d;
+	int		t_x;
+	int		t_y;
+	double	rot_x;
+	double	rot_z;
+	double	zoom;
+}	t_map;
+
+typedef struct	s_program
+{
+	void	*mlx;
+	void	*win;
+	t_img	img;
+	t_map	map;
+}	t_program;
 #endif
