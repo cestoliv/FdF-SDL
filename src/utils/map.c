@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.f>       +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 15:51:49 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/13 12:50:55 by ocartier         ###   ########lyon.fr   */
+/*   Updated: 2022/01/05 13:00:37 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-#include "../../libft/libft.h"
 
-int	get_map_height(char *filename)
+static int	get_map_height(char *filename)
 {
 	int		lines_num;
 	int		fd;
@@ -31,7 +30,7 @@ int	get_map_height(char *filename)
 	return (lines_num);
 }
 
-int	get_map_width(char *filename)
+static int	get_map_width(char *filename)
 {
 	int		width;
 	int		fd;
@@ -53,17 +52,21 @@ int	get_map_width(char *filename)
 	return (width + 1);
 }
 
-void	alloc_3dmap_array(t_3Dpoint ***map, int height, int width)
+static void	alloc_3dmap_array(t_3Dpoint ***map, int height, int width)
 {
 	int	curh;
 	int	curw;
 
 	curh = 0;
 	*map = (t_3Dpoint **)malloc(sizeof(t_3Dpoint *) * (height + 1));
+	if (!(*map))
+		exit(EXIT_FAILURE);
 	(*map)[height] = 0;
 	while (curh < height)
 	{
 		(*map)[curh] = (t_3Dpoint *)malloc(sizeof(t_3Dpoint) * (width + 1));
+		if (!(*map)[curh])
+			exit(EXIT_FAILURE);
 		curw = 0;
 		while (curw < width)
 		{

@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/13 12:41:38 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/14 12:06:20 by ocartier         ###   ########.fr       */
+/*   Created: 2022/01/05 10:25:24 by ocartier          #+#    #+#             */
+/*   Updated: 2022/01/05 10:25:48 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#include "../includes/fdf.h"
 
-void	parse_map_file(char *filename, t_3Dpoint ***map);
-t_point	**convert_to_iso(t_3Dpoint **map, t_map mapd);
-#endif
+t_3Dpoint	matmul(t_3Dpoint mul[3], t_3Dpoint mat)
+{
+	t_3Dpoint	result;
+
+	result.x = mat.x * mul[0].x + mat.y * mul[0].y + mat.z * mul[0].z;
+	result.y = mat.x * mul[1].x + mat.y * mul[1].y + mat.z * mul[1].z;
+	result.z = mat.x * mul[2].x + mat.y * mul[2].y + mat.z * mul[2].z;
+	return (result);
+}

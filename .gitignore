@@ -9,3 +9,5 @@ fdf
 fdf_ex
 *.dylib
 *.o
+*.out.*
+.vscode

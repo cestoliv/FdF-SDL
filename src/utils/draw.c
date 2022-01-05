@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/17 15:19:27 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/17 15:29:21 by ocartier         ###   ########.fr       */
+/*   Created: 2022/01/05 12:47:39 by ocartier          #+#    #+#             */
+/*   Updated: 2022/01/05 12:53:31 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-#include "../includes/img.h"
 
 void	draw_map(t_point **map, t_img *img, int color)
 {
@@ -31,5 +30,54 @@ void	draw_map(t_point **map, t_img *img, int color)
 			cury++;
 		}
 		curx++;
+	}
+}
+
+void	redraw(t_program *p)
+{
+	if (!p->updated)
+	{
+		img_init_background(&p->img, p->img.width, p->img.height, 0x000000);
+		convert_to_iso(&p->map, 1);
+		draw_map(p->map.m2d, &p->img, p->map.color);
+		mlx_put_image_to_window(
+			p->mlx, p->win, p->img.img, p->img.pos.x, p->img.pos.y);
+	}
+	p->updated = 1;
+}
+
+void	draw_square(t_program *p, t_point pos, int size, int color)
+{
+	int	x;
+	int	y;
+
+	x = pos.x;
+	while (x < pos.x + size)
+	{
+		y = pos.y;
+		while (y < pos.y + size)
+		{
+			mlx_pixel_put(p->mlx, p->win, x, y, color);
+			y++;
+		}
+		x++;
+	}
+}
+
+void	draw_rect(t_program *p, t_point top_left, t_point bm_right, int color)
+{
+	int	x;
+	int	y;
+
+	x = top_left.x;
+	while (x < bm_right.x)
+	{
+		y = top_left.y;
+		while (y < bm_right.y)
+		{
+			mlx_pixel_put(p->mlx, p->win, x, y, color);
+			y++;
+		}
+		x++;
 	}
 }

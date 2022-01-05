@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   img.h                                              :+:      :+:    :+:   */
+/*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.f>       +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 09:41:06 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/09 10:07:09 by ocartier         ###   ########lyon.fr   */
+/*   Created: 2022/01/05 12:30:32 by ocartier          #+#    #+#             */
+/*   Updated: 2022/01/05 12:30:57 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IMG_H
-# define IMG_H
-# include "fdf.h"
-void	img_pixel_put(t_img *img, int x, int y, int color);
-void	img_init_background(t_img *img, int width, int height, int color);
-void	img_line_put(t_img *img, t_point p1, t_point p2, int color);
+#ifndef KEYS_H
+# define KEYS_H
+# define ON_DESTROY			17
+# define ON_BUTTON_PRESS	4
+# define ON_BUTTON_RELEASE	5
+# define ON_MOTION_NOTIFY	6
 #endif
