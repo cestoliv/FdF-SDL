@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:02:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/05 13:04:04 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/09 16:27:25 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include "../../libft/libft.h"
-# include "../../mlx/mlx.h"
+# include <SDL2/SDL.h>
+# include <SDL2/SDL_ttf.h>
 # include "keys.h"
-# include "keys_mac.h"
 
 typedef struct s_point
 {
@@ -59,33 +59,35 @@ typedef struct s_map
 	double		rot_z;
 	double		z_increase;
 	double		zoom;
-	int			color;
+	SDL_Color	color;
 }	t_map;
 
 typedef struct s_program
 {
-	void	*mlx;
-	void	*win;
-	int		width;
-	int		height;
-	t_img	img;
-	t_map	map;
-	t_point	mouse;
-	int		updated;
-	int		mouse_right;
-	int		mouse_left;
+	SDL_Window		*winS;
+	SDL_Renderer	*rend;
+	int				width;
+	int				height;
+	t_img			img;
+	t_map			map;
+	t_point			mouse;
+	int				mouse_right;
+	int				mouse_left;
+	char			*filename;
 }	t_program;
 
 // controls_utils.c
+void		deal_event(SDL_Event e, t_program *p);
 void		set_isometric(t_program *p);
 void		set_dimetric(t_program *p);
 void		set_trimetric(t_program *p);
-int			set_color(int key, t_program *p);
+void		set_color(int key, t_program *p);
 // controls.c
-int			deal_key(int key, void *param);
-int			button_press(int key, int x, int y, void *param);
-int			button_release(int key, int x, int y, void *param);
-int			mouse_motion(int x, int y, void *param);
+void		deal_key(t_program *p, int key);
+void		mouse_wheel(t_program *p, SDL_Event e);
+void		button_press(t_program *p, int button);
+void		button_release(t_program *p, int button);
+void		mouse_motion(t_program *p);
 // convert_utils.c
 void		*free_m2d(t_point ***m2d, int is_allocated);
 int			get_3dmap_width(t_3Dpoint **map_3d);
@@ -94,14 +96,8 @@ int			get_3dmap_height(t_3Dpoint **map_3d);
 t_point		**alloc_2dmap_array(t_3Dpoint **map_3d);
 void		convert_to_iso(t_map *mapd, int is_allocated);
 // draw.c
-void		draw_map(t_point **map, t_img *img, int color);
+void		draw_map(t_program *p);
 void		redraw(t_program *p);
-void		draw_square(t_program *p, t_point pos, int size, int color);
-void		draw_rect(t_program *p, t_point tl, t_point br, int color);
-// img.c
-void		img_pixel_put(t_img *img, int x, int y, int color);
-void		img_init_background(t_img *img, int width, int height, int color);
-void		img_line_put(t_img *img, t_point p1, t_point p2, int color);
 // instructions.c
 void		draw_instructions(t_program *p);
 void		draw_color_instructions(t_program *p);
@@ -114,4 +110,6 @@ t_3Dpoint	**get_rotxyz(t_map mapd);
 void		*free_rot(t_3Dpoint **rot);
 // utils.c
 t_point		get_tpoint(int x, int y);
+SDL_Color	get_color(int r, int g, int b);
+void		assign_sdl_color(SDL_Color *color, int r, int g, int b);
 #endif

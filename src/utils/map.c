@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 15:51:49 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/05 13:00:37 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:25:48 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	get_map_height(char *filename)
 		free(line);
 		line = get_next_line(fd, GNL_KEEP);
 	}
+	close(fd);
 	return (lines_num);
 }
 
@@ -103,4 +104,5 @@ void	parse_map_file(char *filename, t_3Dpoint ***map)
 		free(line);
 		line = get_next_line(fd, GNL_KEEP);
 	}
+	close(fd);
 }

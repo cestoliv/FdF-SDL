@@ -6,17 +6,19 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:47:39 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/05 12:53:31 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/09 16:27:22 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	draw_map(t_point **map, t_img *img, int color)
+void	draw_map(t_program *p)
 {
-	int	curx;
-	int	cury;
+	int		curx;
+	int		cury;
+	t_point	**map;
 
+	map = p->map.m2d;
 	curx = 0;
 	while (map[curx])
 	{
@@ -24,9 +26,13 @@ void	draw_map(t_point **map, t_img *img, int color)
 		while (!map[curx][cury].last)
 		{
 			if (map[curx + 1])
-				img_line_put(img, map[curx][cury], map[curx + 1][cury], color);
+				SDL_RenderDrawLine(p->rend,
+					(int)map[curx][cury].x, (int)map[curx][cury].y,
+					(int)map[curx + 1][cury].x, (int)map[curx + 1][cury].y);
 			if (!map[curx][cury + 1].last)
-				img_line_put(img, map[curx][cury], map[curx][cury + 1], color);
+				SDL_RenderDrawLine(p->rend,
+					(int)map[curx][cury].x, (int)map[curx][cury].y,
+					(int)map[curx][cury + 1].x, (int)map[curx][cury + 1].y);
 			cury++;
 		}
 		curx++;
@@ -35,49 +41,12 @@ void	draw_map(t_point **map, t_img *img, int color)
 
 void	redraw(t_program *p)
 {
-	if (!p->updated)
-	{
-		img_init_background(&p->img, p->img.width, p->img.height, 0x000000);
-		convert_to_iso(&p->map, 1);
-		draw_map(p->map.m2d, &p->img, p->map.color);
-		mlx_put_image_to_window(
-			p->mlx, p->win, p->img.img, p->img.pos.x, p->img.pos.y);
-	}
-	p->updated = 1;
-}
-
-void	draw_square(t_program *p, t_point pos, int size, int color)
-{
-	int	x;
-	int	y;
-
-	x = pos.x;
-	while (x < pos.x + size)
-	{
-		y = pos.y;
-		while (y < pos.y + size)
-		{
-			mlx_pixel_put(p->mlx, p->win, x, y, color);
-			y++;
-		}
-		x++;
-	}
-}
-
-void	draw_rect(t_program *p, t_point top_left, t_point bm_right, int color)
-{
-	int	x;
-	int	y;
-
-	x = top_left.x;
-	while (x < bm_right.x)
-	{
-		y = top_left.y;
-		while (y < bm_right.y)
-		{
-			mlx_pixel_put(p->mlx, p->win, x, y, color);
-			y++;
-		}
-		x++;
-	}
+	SDL_SetRenderDrawColor(p->rend, 0, 0, 0, 255);
+	SDL_RenderClear(p->rend);
+	convert_to_iso(&p->map, 1);
+	SDL_SetRenderDrawColor(p->rend,
+		p->map.color.r, p->map.color.g, p->map.color.b, p->map.color.a);
+	draw_map(p);
+	draw_instructions(p);
+	SDL_RenderPresent(p->rend);
 }

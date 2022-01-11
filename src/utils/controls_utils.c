@@ -6,11 +6,25 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:37:28 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/05 12:38:44 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/06 11:34:24 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+
+void	deal_event(SDL_Event e, t_program *p)
+{
+	if (e.type == SDL_KEYDOWN)
+		deal_key(p, e.key.keysym.sym);
+	else if (e.type == SDL_MOUSEWHEEL)
+		mouse_wheel(p, e);
+	else if (e.type == SDL_MOUSEBUTTONDOWN)
+		button_press(p, e.button.button);
+	else if (e.type == SDL_MOUSEBUTTONUP)
+		button_release(p, e.button.button);
+	else if (e.type == SDL_MOUSEMOTION)
+		mouse_motion(p);
+}
 
 void	set_isometric(t_program *p)
 {
@@ -36,23 +50,20 @@ void	set_trimetric(t_program *p)
 	p->map.z_increase = 0.2;
 }
 
-int	set_color(int key, t_program *p)
+void	set_color(int key, t_program *p)
 {
-	if (key == KEY_1)
-		p->map.color = 0xFFFFFF;
-	else if (key == KEY_2)
-		p->map.color = 0x008000;
-	else if (key == KEY_3)
-		p->map.color = 0xFF0000;
-	else if (key == KEY_4)
-		p->map.color = 0x1F75FE;
-	else if (key == KEY_5)
-		p->map.color = 0xFFFF00;
-	else if (key == KEY_6)
-		p->map.color = 0xFF1493;
-	else if (key == KEY_7)
-		p->map.color = 0x808080;
-	else
-		return (0);
-	return (1);
+	if (key == SDLK_1)
+		assign_sdl_color(&p->map.color, 255, 255, 255);
+	else if (key == SDLK_2)
+		assign_sdl_color(&p->map.color, 0, 128, 0);
+	else if (key == SDLK_3)
+		assign_sdl_color(&p->map.color, 255, 0, 0);
+	else if (key == SDLK_4)
+		assign_sdl_color(&p->map.color, 31, 117, 254);
+	else if (key == SDLK_5)
+		assign_sdl_color(&p->map.color, 255, 255, 0);
+	else if (key == SDLK_6)
+		assign_sdl_color(&p->map.color, 255, 20, 147);
+	else if (key == SDLK_7)
+		assign_sdl_color(&p->map.color, 128, 128, 128);
 }

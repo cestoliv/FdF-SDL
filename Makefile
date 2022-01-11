@@ -1,52 +1,38 @@
+FRAMERATE	=	60
 SRCS		=	src/utils/controls_utils.c \
 				src/utils/controls.c \
 				src/utils/convert_utils.c \
 				src/utils/convert.c \
 				src/utils/draw.c \
-				src/utils/img.c \
 				src/utils/instructions.c \
 				src/utils/map.c \
 				src/utils/matrix.c \
 				src/utils/rotation_matrix.c \
 				src/utils/utils.c \
 				src/main.c
-HEADERS		=	src/includes/fdf.h \
-				src/includes/keys_linux.h \
-				src/includes/keys_mac.h
-OBJS		=	${SRCS:.c=.o}
+HEADERS		= 	src/includes/fdf.h \
+				src/includes/keys.h
 NAME		=	fdf
-CC			=	clang -Wall -Wextra -Werror
-FLAGS		=	-lm -Lmlx -lmlx -Llibft -lft
-FLAGS_MACOS	=	-framework OpenGL -framework AppKit
-FLAGS_LINUX	=	-lXext -lX11
+CC			=	clang -g
+FLAGS		=	-lm -Llibft -lft `sdl2-config --libs` -lSDL2_ttf
 
 %.o: %.c ${HEADERS}
-			${CC} -Isrc/includes -c $< -o ${<:.c=.o}
+			${CC} -D FRAMERATE=${FRAMERATE} $< -c -o $@ `sdl2-config --cflags`
 
 all:		${NAME}
 
-${NAME}:	${OBJS} ${HEADERS}
+${NAME}:	${SRCS:.c=.o} ${HEADERS}
 			make -C libft
-			make -C mlx
-			cp mlx/libmlx.dylib .
-			${CC} ${FLAGS} ${FLAGS_MACOS} -o $@ ${OBJS}
-
-linux:		${OBJS} ${HEADERS}
-			make -C libft
-			make -C mlx
-			${CC} ${OBJS} ${FLAGS} ${FLAGS_LINUX} -o ${NAME}
+			${CC} ${SRCS:.c=.o} -o ${NAME} ${FLAGS}
 
 clean:
+			rm -rf ${SRCS:.c=.o}
 			make clean -C libft
-			make clean -C mlx
-			rm -rf ${OBJS}
-			rm libmlx.dylib
 
 fclean:		clean
-			make fclean -C libft
-			make clean -C mlx
 			rm -rf ${NAME}
+			make fclean -C libft
 
 re:			fclean all
 
-.PHONY:		all clean fclean re ${NAME} linux
+.PHONY:		all clean fclean re

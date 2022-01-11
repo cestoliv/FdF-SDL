@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys_linux.h                                       :+:      :+:    :+:   */
+/*   ft_printchar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 12:27:44 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/05 12:28:39 by ocartier         ###   ########.fr       */
+/*   Created: 2021/11/29 13:58:41 by ocartier          #+#    #+#             */
+/*   Updated: 2022/01/11 12:31:35 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_LINUX_H
-# define KEYS_LINUX_H
-# define KEY_LEFT		65361
-# define KEY_UP			65362
-# define KEY_RIGHT		65363
-# define KEY_DOWN		65364
-# define KEY_Z			122
-# define KEY_S			115
-# define KEY_Q			113
-# define KEY_D			100
-# define KEY_R			114
-# define WHEEL_UP		4
-# define WHEEL_DOWN		5
-# define BUTTON_PRESS	4
-# define MOTION_NOTIFY	6
-#endif
+#include "../ft_printf.h"
+
+int	print_char(char c)
+{
+	write(1, &c, 1);
+	return (1);
+}
+
+int	pf_printchar(char c, t_opt opt)
+{
+	int	cur;
+
+	cur = 0;
+	while (cur + 1 < opt.min_width)
+		cur += print_char(' ');
+	cur += print_char(c);
+	while (cur < opt.offset)
+		cur += print_char(' ');
+	return (cur);
+}

@@ -6,78 +6,70 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 15:19:25 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/05 12:37:36 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/09 10:17:57 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-int	deal_key(int key, void *param)
+void	deal_key(t_program *p, int key)
 {
-	t_program	*p;
-
-	p = param;
-	if (key == KEY_I)
+	if (key == SDLK_i)
+		set_isometric(p);
+	else if (key == SDLK_r)
 		set_dimetric(p);
-	else if (key == KEY_R)
-		set_dimetric(p);
-	else if (key == KEY_T)
+	else if (key == SDLK_t)
 		set_trimetric(p);
-	else if (key == KEY_PLUS)
-		p->map.z_increase += 0.2;
-	else if (key == KEY_MINUS)
-		p->map.z_increase -= 0.2;
-	else if (!set_color(key, p))
-	{
-		p->updated = 1;
-		return (0);
-	}
-	p->updated = 0;
-	return (0);
+	else if (key == SDLK_KP_PLUS)
+		p->map.z_increase += 0.005;
+	else if (key == SDLK_KP_MINUS)
+		p->map.z_increase -= 0.005;
+	else
+		set_color(key, p);
 }
 
-int	button_press(int key, int x, int y, void *param)
+void	mouse_wheel(t_program *p, SDL_Event e)
 {
-	t_program	*p;
+	if (e.wheel.y > 0)
+		p->map.zoom *= 1.3;
+	else if (e.wheel.y < 0)
+		p->map.zoom /= 1.3;
+}
 
-	p = param;
-	if (key == MOUSE_LEFT)
+void	button_press(t_program *p, int button)
+{
+	int	x;
+	int	y;
+
+	SDL_GetMouseState(&x, &y);
+	if (button == SDL_BUTTON_LEFT)
 		p->mouse_left = 1;
-	else if (key == MOUSE_RIGHT)
+	else if (button == SDL_BUTTON_RIGHT)
 		p->mouse_right = 1;
-	else
-	{
-		if (key == WHEEL_UP)
-			p->map.zoom *= 1.3;
-		else if (key == WHEEL_DOWN)
-			p->map.zoom /= 1.3;
-		if (key == WHEEL_UP || key == WHEEL_DOWN)
-			p->updated = 0;
-	}
 	p->mouse.x = x;
 	p->mouse.y = y;
-	return (0);
 }
 
-int	button_release(int key, int x, int y, void *param)
+void	button_release(t_program *p, int button)
 {
-	t_program	*p;
+	int	x;
+	int	y;
 
-	p = param;
-	if (key == MOUSE_LEFT)
+	SDL_GetMouseState(&x, &y);
+	if (button == SDL_BUTTON_LEFT)
 		p->mouse_left = 0;
-	else if (key == MOUSE_RIGHT)
+	else if (button == SDL_BUTTON_RIGHT)
 		p->mouse_right = 0;
 	p->mouse.x = x;
 	p->mouse.y = y;
-	return (0);
 }
 
-int	mouse_motion(int x, int y, void *param)
+void	mouse_motion(t_program *p)
 {
-	t_program	*p;
+	int	x;
+	int	y;
 
-	p = param;
+	SDL_GetMouseState(&x, &y);
 	if (p->mouse_right)
 	{
 		p->map.rot_x += (p->mouse.y - y) / 150;
@@ -92,7 +84,5 @@ int	mouse_motion(int x, int y, void *param)
 	{
 		p->mouse.x = x;
 		p->mouse.y = y;
-		p->updated = 0;
 	}
-	return (0);
 }
