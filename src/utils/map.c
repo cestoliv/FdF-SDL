@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 15:51:49 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/12 16:00:02 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:06:05 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	get_map_width(char *filename)
 	line = get_next_line(fd, GNL_CLEAR);
 	while (line[cur])
 	{
-		if (line[cur] == ' ' && line[cur - 1] != ' ' || !line[cur + 1])
+		if ((line[cur] == ' ' && line[cur - 1] != ' ') || !line[cur + 1])
 			width++;
 		cur++;
 	}
