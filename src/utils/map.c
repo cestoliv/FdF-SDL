@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 15:51:49 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/05 14:25:48 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:00:02 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ static int	get_map_width(char *filename)
 	char	*line;
 	int		cur;
 
-	width = 0;
+	width = 1;
 	cur = 0;
 	fd = open(filename, O_RDONLY);
 	line = get_next_line(fd, GNL_CLEAR);
 	while (line[cur])
 	{
-		if (line[cur] == ' ' && line[cur - 1] != ' ')
+		if (line[cur] == ' ' && line[cur - 1] != ' ' || !line[cur + 1])
 			width++;
 		cur++;
 	}
 	free(line);
 	close(fd);
-	return (width + 1);
+	return (width);
 }
 
 static void	alloc_3dmap_array(t_3Dpoint ***map, int height, int width)
